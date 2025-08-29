@@ -8,9 +8,6 @@ import sys
 sys.path.append("..")
 from clip import clip
 from loss.prediction import prediction
-
-#第一阶段，压缩加入0，1，主要考虑图片的重建效果考虑不确定性
-
 def train_conditional_f_epoch(
     model, criterion, train_dataloader, optimizer, aux_optimizer,epoch, clip_max_norm, logger_train, tb_logger, current_step, clip_model, preprocess,clip_loss,lambda_clip, lambda_beta0, lambda_beta1, tau
 ):
@@ -123,9 +120,6 @@ def train_conditional_f_epoch(
                 )
 
     return current_step
-
-
-#第二阶段，压缩加入0，1 主要考虑CLIP的结果考虑不确定性
 def train_conditional_s_epoch(
     model, criterion, train_dataloader, optimizer, aux_optimizer,epoch, clip_max_norm, logger_train, tb_logger, current_step, clip_model, preprocess,clip_loss, lambda_clip, lambda_beta0, lambda_beta1, tau
 ):
