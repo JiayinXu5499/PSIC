@@ -29,7 +29,7 @@ class TrainData(Dataset):
         line_path = annotation_line.replace('\n','')+'.txt'
         image   = Image.open(path)
         image = image.convert('RGB') 
-        with open(line_path, 'r', encoding='utf-8') as file:  # 假设文件是UTF-8编码  
+        with open(line_path, 'r', encoding='utf-8') as file: 
             line = file.read()  
         return image, line
 
@@ -60,7 +60,7 @@ class TrainCLIPData(Dataset):
         line_path = annotation_line.replace('\n','')+'.txt'
         image   = Image.open(path)
         image = image.convert('RGB') 
-        with open(line_path, 'r', encoding='utf-8') as file:  # 假设文件是UTF-8编码  
+        with open(line_path, 'r', encoding='utf-8') as file: 
             line = file.read()  
         return image, line    
 
