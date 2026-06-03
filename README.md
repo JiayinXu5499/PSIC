@@ -73,7 +73,7 @@ pip install git+https://github.com/openai/CLIP.git
 Download our pretrained model weights from the link below. Place them in a `experiments/` folder in the project's root directory (create the folder if it doesn't exist).
 | Model | Download Link |
 |:---:|:---:|
-| **PSIC** | [Baidu Netdisk](https://pan.baidu.com/s/1JGZ9bZYp1pq4zT4fd8ubQA?pwd=eq7q)|
+| **PSIC** | [Baidu Netdisk](https://pan.baidu.com/s/1-99QSuRVBHwM1va0AMsS-w?pwd=y3wd)|
 ### 2. Testing: Compression & Decompression
 We use the **Kodak** dataset to evaluate visual quality.
 
