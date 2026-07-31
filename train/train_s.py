@@ -126,7 +126,7 @@ def main():
       #    param.requires_grad = False
       for name, param in net.named_parameters():
         #if not ('g_s' in name or 'global_cond' in name):
-        if not ('g_s' in name or 'g_s_global_cond' in name):
+        if not ('g_s' in name or 'global_cond' in name or 'g_s_global_cond' in name):
             param.requires_grad = False   
       for name, param in net.named_parameters():
           print(f"{name}: requires_grad={param.requires_grad}")
@@ -145,7 +145,7 @@ def main():
       checkpoint = torch.load(args.fine_tune)
       net.load_state_dict(checkpoint['state_dict'])
       for name, param in net.named_parameters():
-        if not ('g_s' in name or 'g_s_global_cond' in name):
+          if not ('g_s' in name or 'global_cond' in name or 'g_s_global_cond' in name):
             param.requires_grad = False   
       for name, param in net.named_parameters():
           print(f"{name}: requires_grad={param.requires_grad}")
