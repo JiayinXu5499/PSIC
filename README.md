@@ -102,11 +102,11 @@ python test.py
 Take the first compression level as an example:
 ```bash
 cd PSIC/train
-python train_f.py --experiment mse0011 --metrics mse --lambda 0.0011 --lambda_beta0 0.0011 --lambda_beta1 0.0011 --lambda_clip 0.0009 --num-workers 8 --seed 2000 --batch-size 128 --test-batch-size 128
+python train_f.py --experiment mse0011 --metrics mse --lambda 0.0011 --lambda_beta0 0.0011 --lambda_beta1 0.0011 --lambda_clip 0.0009 --num-workers 8 --seed 2000 --batch-size 128 --test-batch-size 128 --seed 2000
 ```
 ### Step 2: Emphasize Privacy Protection
 ```bash
-python train_s.py --experiment mseq10011 --epochs 100 --learning-rate 1e-5 --lambda 0.01 --batch-size 64 --checkpoint experiments/mse0011/checkpoint_best_loss.pth.tar --lambda_clip 0.07 --lambda_beta0 0.0011 --lambda_beta1 0.0011 
+python train_s.py --experiment mseq10011 --epochs 100 --learning-rate 1e-5 --lambda 0.01 --batch-size 64 --checkpoint experiments/mse0011/checkpoint_best_loss.pth.tar --lambda_clip 0.07 --lambda_beta0 0.0011 --lambda_beta1 0.0011 --seed 2000
 ```
 ## 🙏 Acknowledgements
 Our implementation is based on [CompressAI](https://github.com/InterDigitalInc/CompressAI), [CLIP](https://github.com/openai/CLIP) and [BLIP](https://github.com/salesforce/BLIP). We thank the authors for their excellent open-source projects.
