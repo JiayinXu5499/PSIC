@@ -147,24 +147,26 @@ def train_conditional_s_epoch(
         per_output = clip_model.encode_image(preprocess(d)).float()
         per_output1 = clip_model.encode_image(preprocess(out_net2["x_hat"])).float()
         #判断图片文本对是否存在噪声  
-        n_idx,c_idx,i_label,t_label = prediction(per_output, output_text,lengths, tau,device)
-        c_per_output = per_output1[c_idx,:]
-        c_output_text = output_text[c_idx,:]
-        n_per_output = per_output1[n_idx,:]
-        n_output_text = output_text[n_idx,:]
-        c_loss = (clip_loss(c_per_output,c_output_text,1,0)).mean()
-        n_loss = 0.5* (clip_loss(n_per_output,output_text,0,i_label) + clip_loss(n_output_text,per_output1,0,t_label)).mean()
-        #n_loss = 0.5* (clip_loss(n_per_output,output_text,0,n_idx) + clip_loss(n_output_text,per_output1,0,n_idx)).mean()
-        w1 = 1 / (c_loss + 1e-8)
-        w2 = 1 / (n_loss + 1e-8)
-        total_weight = w1+w2
-        w1,w2 = w1/total_weight, w2/total_weight
-        closs = w1 *c_loss + w2 * n_loss
+        n_idx, c_idx, i_label, t_label = prediction(per_output, output_text, lengths, tau, device)
+        c_per_output = per_output1[c_idx, :]
+        c_output_text = output_text[c_idx, :]
+        c_loss = (clip_loss(c_per_output, c_output_text, 1, 0)).mean()
+        if len(n_idx) == 0:
+            closs = c_loss
+        else:
+            n_per_output = per_output1[n_idx, :]
+            n_output_text = output_text[n_idx, :]
+            n_loss = 0.5 * (clip_loss(n_per_output, output_text, 0, i_label) + clip_loss(n_output_text, per_output1, 0, t_label)).mean()
+            n_loss = 0.5 * (clip_loss(n_per_output, output_text, 0, n_idx) + clip_loss(n_output_text, per_output1, 0, n_idx)).mean()
+            w1 = 1 / (c_loss + 1e-8)
+            w2 = 1 / (n_loss + 1e-8)
+            total_weight = w1 + w2
+            w1, w2 = w1 / total_weight, w2 / total_weight
+            closs = w1 * c_loss + w2 * n_loss
+            
         #closs = (10*clip_loss(c_per_output,c_output_text,1,0)+ 0.5 * (clip_loss(n_per_output,output_text,0,n_idx) + clip_loss(n_output_text,per_output1,0,n_idx))).mean()
         #closs = (10*clip_loss(c_per_output,c_output_text,1,0)+ clip_loss(n_per_output,output_text,0,i_label)).mean()
-        #between = mse(out_net1["x_hat"],out_net2["x_hat"])
-        #h_image_mse = 0.02 * 255 ** 2 * max(between,2.5e-5)        total_loss = 0.5 * (lambda_beta0 * 255 ** 2 * extracted_prinst_mse + lambda_beta1 * 255 ** 2 * extracted_image_mse) + lambda_clip * closs
-        #total_loss += h_image_mse
+        total_loss = 0.5 * (lambda_beta0 * 255 ** 2 * extracted_prinst_mse + lambda_beta1 * 255 ** 2 * extracted_image_mse) + lambda_clip * closs
         total_loss.backward()
         
 
